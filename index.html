@@ -3,83 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Core 11 | Digital Flip Menu</title>
+    <title>Core 11 | Premium Flip Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background: #0f172a; /* Aap yahan poora BG change kar sakte hain */
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; overflow: hidden; font-family: 'Poppins', sans-serif;
-        }
-
-        /* Flip Logic */
-        .book { position: relative; width: 320px; height: 500px; perspective: 1500px; }
+        :root { --gold: #c5a059; --dark: #0a0a0a; }
+        body { background-color: var(--dark); font-family: 'Poppins', sans-serif; color: white; overflow-x: hidden; }
         
-        .page {
-            position: absolute; width: 100%; height: 100%;
-            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-            transform-style: preserve-3d; transform-origin: left;
-            cursor: pointer; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* Desktop View (Standard Grid) */
+        .menu-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 40px 20px; }
+        
+        /* Phone View (Flip Book Effect) - Only for screens smaller than 768px */
+        @media (max-width: 767px) {
+            .menu-container { height: 90vh; perspective: 1500px; display: block; padding: 20px; position: relative; }
+            .card { position: absolute; width: calc(100% - 40px); height: 500px; transition: transform 0.8s; transform-style: preserve-3d; transform-origin: left; cursor: pointer; }
+            .card.flipped { transform: rotateY(-180deg); }
         }
 
-        .front, .back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; border-radius: 15px;
-            padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
+        .card { width: 320px; height: 500px; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+        .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; overflow: hidden; border: 1px solid rgba(197, 160, 89, 0.3); }
+        .back { transform: rotateY(180deg); background: #111; }
 
-        .back { transform: rotateY(180deg); background: #1e293b; }
-
-        /* Yeh rahi aapki Background settings */
-        .page-1-front { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80'); background-size: cover; border: 2px solid #fbbf24; }
-        .page-2-front { background: #ffffff; color: #333; }
-
-        .flipped { transform: rotateY(-180deg); }
+        /* Design Elements */
+        .menu-bg { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=800'); background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .gold-text { color: var(--gold); font-family: 'Playfair Display', serif; }
+        .item-row { display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 5px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="book" id="book">
+    <header class="text-center pt-10 pb-5">
+        <h1 class="gold-text text-4xl uppercase tracking-widest">Core 11 <span class="text-white">Dimensions</span></h1>
+        <p class="text-gray-500 text-xs tracking-widest mt-2 uppercase">Premium Culinary Experience</p>
+    </header>
+
+    <div class="menu-container">
         
-        <div class="page" id="p1" onclick="flipPage('p1')">
-            <div class="front page-1-front">
-                <h1 class="text-3xl font-black text-yellow-400 text-center tracking-widest">ROYAL CAFE</h1>
-                <p class="text-white text-xs mt-4 italic">Tap to open the Magic</p>
-                <div class="mt-20 animate-bounce text-yellow-400">
-                    <i class="fas fa-hand-pointer"></i>
+        <div class="card" id="c1" onclick="handleFlip('c1')">
+            <div class="front menu-bg">
+                <div class="border-2 border-[#c5a059] p-6 text-center">
+                    <h2 class="gold-text text-5xl">FOOD</h2>
+                    <h3 class="text-white tracking-[10px] ml-2">MENU</h3>
                 </div>
             </div>
-            <div class="back p-10">
-                <h2 class="text-xl font-bold text-yellow-400">Starters</h2>
-                <ul class="text-white mt-4 space-y-3 text-sm">
-                    <li class="flex justify-between border-b border-white/10 pb-1"><span>Crunchy Burger</span> <span>₹120</span></li>
-                    <li class="flex justify-between border-b border-white/10 pb-1"><span>Peri Peri Fries</span> <span>₹90</span></li>
-                    <li class="flex justify-between border-b border-white/10 pb-1"><span>Cheese Pizza</span> <span>₹250</span></li>
-                </ul>
+            <div class="back p-8">
+                <h2 class="gold-text text-2xl mb-6 text-center border-b border-[#c5a059] pb-2">STARTERS</h2>
+                <div class="item-row"><div><p class="font-bold">Grilled Steak</p><p class="text-[10px] text-gray-400">Roasted with herbs</p></div><span class="gold-text">₹450</span></div>
+                <div class="item-row"><div><p class="font-bold">Peri Peri Fries</p></div><span class="gold-text">₹120</span></div>
+                <div class="item-row"><div><p class="font-bold">Cheese Garlic Bread</p></div><span class="gold-text">₹180</span></div>
             </div>
         </div>
 
-        <div class="page" id="p2" style="z-index: -1;">
-            <div class="front page-2-front">
-                <h2 class="text-2xl font-black text-slate-800">Ready to Order?</h2>
-                <p class="text-gray-500 text-xs mt-2 text-center">Click below to send your order on WhatsApp</p>
-                <a href="https://wa.me/YOUR_NUMBER?text=Hi, I want to order from Royal Cafe" 
-                   class="mt-10 bg-green-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-green-700 transition">
-                    ORDER ON WHATSAPP
-                </a>
-                <button onclick="flipPage('p1')" class="mt-6 text-[10px] text-slate-400 uppercase tracking-widest">Close Menu</button>
+        <div class="card" id="c2" onclick="handleFlip('c2')">
+            <div class="front bg-[#111] p-8">
+                <h2 class="gold-text text-2xl mb-6 text-center border-b border-[#c5a059] pb-2">MAIN COURSE</h2>
+                <div class="item-row"><div><p class="font-bold">Chicken Tikka Pizza</p></div><span class="gold-text">₹350</span></div>
+                <div class="item-row"><div><p class="font-bold">Alfredo Pasta</p></div><span class="gold-text">₹280</span></div>
+                <div class="item-row"><div><p class="font-bold">Special Veg Platter</p></div><span class="gold-text">₹550</span></div>
+            </div>
+            <div class="back bg-white text-black p-8 flex flex-col justify-center items-center">
+                <h2 class="text-2xl font-bold mb-4">Book Your Table</h2>
+                <p class="text-sm text-center mb-8">Scan to join the royal experience or order directly.</p>
+                <a href="https://wa.me/YOUR_NUMBER" class="bg-black text-white px-6 py-3 rounded-full font-bold">ORDER ON WHATSAPP</a>
             </div>
         </div>
 
     </div>
 
     <script>
-        function flipPage(id) {
-            const page = document.getElementById(id);
-            page.classList.toggle('flipped');
+        function handleFlip(id) {
+            // Only flip if screen is mobile
+            if (window.innerWidth < 768) {
+                document.getElementById(id).classList.toggle('flipped');
+            }
         }
     </script>
-
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
