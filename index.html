@@ -3,79 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Core 11 Dimensions | CDR Marketplace</title>
+    <title>Core 11 | Digital Flip Menu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { background: #020617; color: #f8fafc; font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .neon-glow { box-shadow: 0 0 20px rgba(6, 182, 212, 0.2); }
-        .btn-gradient { background: linear-gradient(90deg, #0891b2 0%, #0e7490 100%); }
+        body {
+            background: #0f172a; /* Aap yahan poora BG change kar sakte hain */
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden; font-family: 'Poppins', sans-serif;
+        }
+
+        /* Flip Logic */
+        .book { position: relative; width: 320px; height: 500px; perspective: 1500px; }
+        
+        .page {
+            position: absolute; width: 100%; height: 100%;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d; transform-origin: left;
+            cursor: pointer; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .front, .back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 15px;
+            padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .back { transform: rotateY(180deg); background: #1e293b; }
+
+        /* Yeh rahi aapki Background settings */
+        .page-1-front { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80'); background-size: cover; border: 2px solid #fbbf24; }
+        .page-2-front { background: #ffffff; color: #333; }
+
+        .flipped { transform: rotateY(-180deg); }
     </style>
 </head>
 <body>
 
-    <nav class="p-5 border-b border-white/5 flex justify-between items-center glass-card sticky top-0 z-50">
-        <div class="text-xl font-black tracking-tighter text-cyan-400">CORE 11 <span class="text-white">DIMENSIONS</span></div>
-        <div class="space-x-4">
-            <a href="https://wa.me/YOUR_NUMBER" class="text-xs font-bold bg-white/5 px-4 py-2 rounded-full border border-white/10">SUPPORT</a>
+    <div class="book" id="book">
+        
+        <div class="page" id="p1" onclick="flipPage('p1')">
+            <div class="front page-1-front">
+                <h1 class="text-3xl font-black text-yellow-400 text-center tracking-widest">ROYAL CAFE</h1>
+                <p class="text-white text-xs mt-4 italic">Tap to open the Magic</p>
+                <div class="mt-20 animate-bounce text-yellow-400">
+                    <i class="fas fa-hand-pointer"></i>
+                </div>
+            </div>
+            <div class="back p-10">
+                <h2 class="text-xl font-bold text-yellow-400">Starters</h2>
+                <ul class="text-white mt-4 space-y-3 text-sm">
+                    <li class="flex justify-between border-b border-white/10 pb-1"><span>Crunchy Burger</span> <span>₹120</span></li>
+                    <li class="flex justify-between border-b border-white/10 pb-1"><span>Peri Peri Fries</span> <span>₹90</span></li>
+                    <li class="flex justify-between border-b border-white/10 pb-1"><span>Cheese Pizza</span> <span>₹250</span></li>
+                </ul>
+            </div>
         </div>
-    </nav>
 
-    <div class="max-w-6xl mx-auto p-6 space-y-16">
-
-        <section class="text-center py-10">
-            <h1 class="text-4xl font-extrabold mb-4">Secure <span class="text-cyan-500">Node</span> Converter</h1>
-            <p class="text-slate-400 mb-8 max-w-xl mx-auto text-sm">Convert your PDF/AI files to CDR format using our 11D secure processing engine.</p>
-            
-            <div class="glass-card p-10 rounded-[2.5rem] max-w-2xl mx-auto border-2 border-dashed border-cyan-500/20 hover:border-cyan-500/50 transition-all">
-                <i class="fas fa-shield-alt text-4xl text-cyan-500 mb-4"></i>
-                <h3 class="text-lg font-bold">Upload Document</h3>
-                <p class="text-xs text-slate-500 mb-6">Files are encrypted and auto-deleted after 24 hours.</p>
-                <input type="file" id="fileInp" class="hidden">
-                <label for="fileInp" class="btn-gradient px-8 py-3 rounded-xl font-bold text-sm cursor-pointer hover:scale-105 transition-transform inline-block">
-                    SELECT FILE
-                </label>
+        <div class="page" id="p2" style="z-index: -1;">
+            <div class="front page-2-front">
+                <h2 class="text-2xl font-black text-slate-800">Ready to Order?</h2>
+                <p class="text-gray-500 text-xs mt-2 text-center">Click below to send your order on WhatsApp</p>
+                <a href="https://wa.me/YOUR_NUMBER?text=Hi, I want to order from Royal Cafe" 
+                   class="mt-10 bg-green-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-green-700 transition">
+                    ORDER ON WHATSAPP
+                </a>
+                <button onclick="flipPage('p1')" class="mt-6 text-[10px] text-slate-400 uppercase tracking-widest">Close Menu</button>
             </div>
-        </section>
-
-        <section>
-            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <span class="w-2 h-8 bg-emerald-500 rounded-full"></span> Free Assets
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-4 rounded-3xl overflow-hidden group">
-                    <img src="free-thumb.jpg" class="w-full h-40 object-cover rounded-2xl mb-4 bg-slate-800" alt="Free Preview">
-                    <h3 class="font-bold text-sm mb-4">Basic Greeting Card CDR</h3>
-                    <a href="YOUR_DRIVE_LINK" class="block text-center py-2 bg-emerald-500/10 text-emerald-400 rounded-xl text-[10px] font-black hover:bg-emerald-500 hover:text-white transition">DOWNLOAD NOW</a>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <span class="w-2 h-8 bg-cyan-500 rounded-full"></span> Premium Dimensions
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-5 rounded-[2rem] border-cyan-500/10 hover:neon-glow transition-all">
-                    <div class="relative overflow-hidden rounded-2xl mb-4">
-                        <img src="premium-thumb.jpg" class="w-full h-48 object-cover bg-slate-800" alt="Premium Preview">
-                        <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold">PREMIUM</div>
-                    </div>
-                    <h3 class="font-bold mb-1">Luxury Wedding Pack v2.0</h3>
-                    <div class="flex items-center justify-between mt-6">
-                        <span class="text-xl font-black text-cyan-400">₹149</span>
-                        <a href="https://wa.me/YOUR_NUMBER?text=Ref: CDR-PRO-01. I want to buy this." class="btn-gradient px-5 py-2.5 rounded-xl text-[10px] font-bold tracking-wider">PAY & UNLOCK</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
 
     </div>
 
-    <footer class="p-10 text-center opacity-30 text-[10px] tracking-widest">
-        © 2026 CORE 11 DIMENSIONS • ALL FILES SECURED BY ENCRYPTION
-    </footer>
+    <script>
+        function flipPage(id) {
+            const page = document.getElementById(id);
+            page.classList.toggle('flipped');
+        }
+    </script>
 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
